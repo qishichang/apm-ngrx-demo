@@ -1,6 +1,7 @@
 import { Product } from '../product';
 import * as fromRoot from '../../state/app.state';
-import { createFeatureSelector, createSelector, State } from '@ngrx/store';
+import { createFeatureSelector, createSelector, State, Action } from '@ngrx/store';
+import { ProjectActions, ProjectActionTypes } from './project.action';
 
 export interface State extends fromRoot.State {
     products: ProductState;
@@ -42,12 +43,22 @@ export const getProducts = createSelector(
     state => state.products
 );
 
-export function reducer(state = initialState, action): ProductState {
+export function reducer(state = initialState, action: ProjectActions): ProductState {
     switch (action.type) {
-        case 'TOGGLE_PRODUCT_CODE':
+        case ProjectActionTypes.ToggleProjectCode:
             return {
                 ...state,
                 showProductCode: action.payload,
+            };
+        case ProjectActionTypes.SetCurrentProject:
+            return {
+                ...state,
+                currentProductId: action.payload.id
+            };
+        case ProjectActionTypes.ClearCurrentProject:
+            return {
+                ...state,
+                currentProductId: null
             };
         default:
             return state;
