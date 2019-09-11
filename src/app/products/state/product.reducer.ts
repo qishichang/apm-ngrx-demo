@@ -1,7 +1,7 @@
 import { Product } from '../product';
 import * as fromRoot from '../../state/app.state';
 import { createFeatureSelector, createSelector, State, Action } from '@ngrx/store';
-import { ProjectActions, ProjectActionTypes } from './project.action';
+import { ProjectActions, ProjectActionTypes } from './product.action';
 
 export interface State extends fromRoot.State {
     products: ProductState;
@@ -9,13 +9,13 @@ export interface State extends fromRoot.State {
 
 export interface ProductState {
     showProductCode: boolean;
-    currentProductId: number | null;
+    currentProduct: Product | null;
     products: Product[];
 }
 
 const initialState: ProductState = {
     showProductCode: true,
-    currentProductId: null,
+    currentProduct: null,
     products: []
 };
 
@@ -26,16 +26,9 @@ export const getShowProductCode = createSelector(
     state => state.showProductCode
 );
 
-export const getCurrentProductId = createSelector(
-    getProductFeatureState,
-    state => state.currentProductId
-);
-
 export const getCurrentProduct = createSelector(
     getProductFeatureState,
-    getCurrentProductId,
-    (state, currentProductId) =>
-        state.products.find(p => p.id === currentProductId)
+    state => state.currentProduct
 );
 
 export const getProducts = createSelector(
@@ -53,12 +46,23 @@ export function reducer(state = initialState, action: ProjectActions): ProductSt
         case ProjectActionTypes.SetCurrentProject:
             return {
                 ...state,
-                currentProductId: action.payload.id
+                currentProduct: action.payload
             };
         case ProjectActionTypes.ClearCurrentProject:
             return {
                 ...state,
-                currentProductId: null
+                currentProduct: null
+            };
+        case ProjectActionTypes.InitializeCurrentProject:
+            return {
+                ...state,
+                currentProduct : {
+                    id: 0,
+                    productName: '',
+                    productCode: 'New',
+                    description: '',
+                    starRating: 0
+                }
             };
         default:
             return state;
