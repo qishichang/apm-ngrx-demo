@@ -64,6 +64,11 @@ export function reducer(state = initialState, action: ProjectActions): ProductSt
                     starRating: 0
                 }
             };
+        case ProjectActionTypes.LoadSuccess:
+            return {
+                ...state,
+                products: action.payload
+            };
         default:
             return state;
     }
