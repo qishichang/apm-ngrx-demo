@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { Product } from '../product';
 import { ProductService } from '../product.service';
@@ -16,7 +16,6 @@ import { takeWhile } from 'rxjs/operators';
 })
 export class ProductListComponent implements OnInit, OnDestroy {
   pageTitle = 'Products';
-  errorMessage: string;
 
   displayCode: boolean;
 
@@ -25,6 +24,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Used to highlight the selected product in the list
   selectedProduct: Product | null;
   componentActive = true;
+  errorMessage$: Observable<string>;
 
   constructor(private store: Store<fromProduct.State>) { }
 
@@ -54,6 +54,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
       .subscribe(
         showProductCode => this.displayCode = showProductCode
     );
+
+    this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
   }
 
   ngOnDestroy(): void {
