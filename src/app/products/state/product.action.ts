@@ -8,7 +8,10 @@ export enum ProjectActionTypes {
     InitializeCurrentProject = '[Project] Initialize Current Project',
     Load = '[Project] Load',
     LoadFail = '[Project] Load Fail',
-    LoadSuccess = '[Project] Load Success'
+    LoadSuccess = '[Project] Load Success',
+    UpdateProject = '[Project] Update Project',
+    UpdateProjectSuccess = '[Project] Update Project Success',
+    UpdateProjectFail = '[Project] Update Project Fail'
 }
 
 export class ToggleProjectCode implements Action {
@@ -47,10 +50,31 @@ export class LoadSuccess implements Action {
     constructor(public payload: Product[]) {}
 }
 
+export class UpdateProject implements Action {
+    readonly type = ProjectActionTypes.UpdateProject;
+
+    constructor(public payload: Product) { }
+}
+
+export class UpdateProjectSuccess implements Action {
+    readonly type = ProjectActionTypes.UpdateProjectSuccess;
+
+    constructor(public payload: Product) {}
+}
+
+export class UpdateProjectFail implements Action {
+    readonly type = ProjectActionTypes.UpdateProjectFail;
+
+    constructor(public payload: string) {}
+}
+
 export type ProjectActions = ToggleProjectCode
     | SetCurrentProject
     | ClearCurrentProject
     | InitializeCurrentProject
     | Load
     | LoadFail
-    | LoadSuccess;
+    | LoadSuccess
+    | UpdateProject
+    | UpdateProjectSuccess
+    | UpdateProjectFail;
