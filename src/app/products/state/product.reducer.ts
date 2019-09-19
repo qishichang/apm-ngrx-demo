@@ -9,14 +9,14 @@ export interface State extends fromRoot.State {
 
 export interface ProductState {
     showProductCode: boolean;
-    currentProduct: Product | null;
+    currentProductId: number | null;
     products: Product[];
     error: string;
 }
 
 const initialState: ProductState = {
     showProductCode: true,
-    currentProduct: null,
+    currentProductId: null,
     products: [],
     error: ''
 };
@@ -28,9 +28,27 @@ export const getShowProductCode = createSelector(
     state => state.showProductCode
 );
 
+export const getCurrentProductId = createSelector(
+    getProductFeatureState,
+    state => state.currentProductId
+);
+
 export const getCurrentProduct = createSelector(
     getProductFeatureState,
-    state => state.currentProduct
+    getCurrentProductId,
+    (state, currentProjectId) => {
+        if (currentProjectId === 0) {
+            return {
+                id: 0,
+                productName: '',
+                productCode: 'New',
+                description: '',
+                starRating: 0
+            };
+        } else {
+            return currentProjectId ? state.products.find(p => p.id === currentProjectId) : null;
+        }
+    }
 );
 
 export const getProducts = createSelector(
@@ -53,23 +71,17 @@ export function reducer(state = initialState, action: ProjectActions): ProductSt
         case ProjectActionTypes.SetCurrentProject:
             return {
                 ...state,
-                currentProduct: action.payload
+                currentProductId: action.payload.id
             };
         case ProjectActionTypes.ClearCurrentProject:
             return {
                 ...state,
-                currentProduct: null
+                currentProductId: null
             };
         case ProjectActionTypes.InitializeCurrentProject:
             return {
                 ...state,
-                currentProduct : {
-                    id: 0,
-                    productName: '',
-                    productCode: 'New',
-                    description: '',
-                    starRating: 0
-                }
+                currentProductId: 0
             };
         case ProjectActionTypes.LoadSuccess:
             return {
