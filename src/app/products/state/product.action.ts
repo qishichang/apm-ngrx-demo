@@ -1,80 +1,80 @@
 import { Action } from '@ngrx/store';
 import { Product } from '../product';
 
-export enum ProjectActionTypes {
-    ToggleProjectCode = '[Project] Toggle Project Code',
-    SetCurrentProject = '[Project] Set Current Project',
-    ClearCurrentProject = '[Project] Clear Current Project',
-    InitializeCurrentProject = '[Project] Initialize Current Project',
-    Load = '[Project] Load',
-    LoadFail = '[Project] Load Fail',
-    LoadSuccess = '[Project] Load Success',
-    UpdateProject = '[Project] Update Project',
-    UpdateProjectSuccess = '[Project] Update Project Success',
-    UpdateProjectFail = '[Project] Update Project Fail'
+export enum ProductActionTypes {
+    ToggleProductCode = '[Product] Toggle Product Code',
+    SetCurrentProduct = '[Product] Set Current Product',
+    ClearCurrentProduct = '[Product] Clear Current Product',
+    InitializeCurrentProduct = '[Product] Initialize Current Product',
+    Load = '[Product] Load',
+    LoadFail = '[Product] Load Fail',
+    LoadSuccess = '[Product] Load Success',
+    UpdateProduct = '[Product] Update Product',
+    UpdateProductSuccess = '[Product] Update Product Success',
+    UpdateProductFail = '[Product] Update Product Fail'
 }
 
-export class ToggleProjectCode implements Action {
-    readonly type = ProjectActionTypes.ToggleProjectCode;
+export class ToggleProductCode implements Action {
+    readonly type = ProductActionTypes.ToggleProductCode;
 
     constructor(public payload: boolean) {}
 }
 
-export class SetCurrentProject implements Action {
-    readonly type = ProjectActionTypes.SetCurrentProject;
+export class SetCurrentProduct implements Action {
+    readonly type = ProductActionTypes.SetCurrentProduct;
 
     constructor(public payload: Product) {}
 }
 
-export class ClearCurrentProject implements Action {
-    readonly type = ProjectActionTypes.ClearCurrentProject;
+export class ClearCurrentProduct implements Action {
+    readonly type = ProductActionTypes.ClearCurrentProduct;
 }
 
-export class InitializeCurrentProject implements Action {
-    readonly type = ProjectActionTypes.InitializeCurrentProject;
+export class InitializeCurrentProduct implements Action {
+    readonly type = ProductActionTypes.InitializeCurrentProduct;
 }
 
 export class Load implements Action {
-    readonly type = ProjectActionTypes.Load;
+    readonly type = ProductActionTypes.Load;
 }
 
 export class LoadFail implements Action {
-    readonly type = ProjectActionTypes.LoadFail;
+    readonly type = ProductActionTypes.LoadFail;
 
     constructor(public payload: string) {}
 }
 
 export class LoadSuccess implements Action {
-    readonly type = ProjectActionTypes.LoadSuccess;
+    readonly type = ProductActionTypes.LoadSuccess;
 
     constructor(public payload: Product[]) {}
 }
 
-export class UpdateProject implements Action {
-    readonly type = ProjectActionTypes.UpdateProject;
+export class UpdateProduct implements Action {
+    readonly type = ProductActionTypes.UpdateProduct;
 
     constructor(public payload: Product) { }
 }
 
-export class UpdateProjectSuccess implements Action {
-    readonly type = ProjectActionTypes.UpdateProjectSuccess;
+export class UpdateProductSuccess implements Action {
+    readonly type = ProductActionTypes.UpdateProductSuccess;
 
     constructor(public payload: Product) {}
 }
 
-export class UpdateProjectFail implements Action {
-    readonly type = ProjectActionTypes.UpdateProjectFail;
+export class UpdateProductFail implements Action {
+    readonly type = ProductActionTypes.UpdateProductFail;
 
     constructor(public payload: string) {}
 }
 
-export type ProjectActions = ToggleProjectCode
-    | SetCurrentProject
-    | ClearCurrentProject
-    | InitializeCurrentProject
+export type ProductActions = ToggleProductCode
+    | SetCurrentProduct
+    | ClearCurrentProduct
+    | InitializeCurrentProduct
     | Load
     | LoadFail
     | LoadSuccess
-    | UpdateProject
-    | UpdateProjectSuccess
-    | UpdateProjectFail;
+    | UpdateProduct
+    | UpdateProductSuccess
+    | UpdateProductFail;

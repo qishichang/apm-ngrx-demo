@@ -15,10 +15,20 @@ export class ProductEffects {
 
     @Effect()
     loadProducts$ = this.actions$.pipe(
-        ofType(productActions.ProjectActionTypes.Load),
-        mergeMap((actions: productActions.Load) => this.productService.getProducts().pipe(
+        ofType(productActions.ProductActionTypes.Load),
+        mergeMap((action: productActions.Load) => this.productService.getProducts().pipe(
             map((products: Product[]) => (new productActions.LoadSuccess(products))),
             catchError(err => of(new productActions.LoadFail(err)))
+        ))
+    );
+
+    @Effect()
+    updateProduct$ = this.actions$.pipe(
+        ofType(productActions.ProductActionTypes.UpdateProduct),
+        map((action: productActions.UpdateProduct) => action.payload ),
+        mergeMap((product: Product) => this.productService.updateProduct(product).pipe(
+            map((updatedProduct: Product) => (new productActions.UpdateProductSuccess(updatedProduct))),
+            catchError(err => of(new productActions.UpdateProductFail(err)))
         ))
     );
 }

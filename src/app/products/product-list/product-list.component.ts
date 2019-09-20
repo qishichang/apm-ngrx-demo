@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Product } from '../product';
-import { ProductService } from '../product.service';
 import { Store, select } from '@ngrx/store';
 import * as fromProduct from '../state/product.reducer';
 import * as productActions from '../state/product.action';
@@ -63,15 +62,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   checkChanged(value: boolean): void {
-    this.store.dispatch(new productActions.ToggleProjectCode(value));
+    this.store.dispatch(new productActions.ToggleProductCode(value));
   }
 
   newProduct(): void {
-    this.store.dispatch(new productActions.InitializeCurrentProject());
+    this.store.dispatch(new productActions.InitializeCurrentProduct());
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(new productActions.SetCurrentProject(product));
+    this.store.dispatch(new productActions.SetCurrentProduct(product));
   }
 
 }
