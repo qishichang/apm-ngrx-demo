@@ -12,15 +12,13 @@ export interface ProductState {
     currentProductId: number | null;
     products: Product[];
     error: string;
-    updateProductError: string;
 }
 
 const initialState: ProductState = {
     showProductCode: true,
     currentProductId: null,
     products: [],
-    error: '',
-    updateProductError: ''
+    error: ''
 };
 
 const getProductFeatureState = createFeatureSelector<ProductState>('products');
@@ -61,11 +59,6 @@ export const getProducts = createSelector(
 export const getError = createSelector(
     getProductFeatureState,
     state => state.error
-);
-
-export const getUpdateProductError = createSelector(
-    getProductFeatureState,
-    state => state.updateProductError
 );
 
 export function reducer(state = initialState, action: ProductActions): ProductState {
@@ -110,12 +103,24 @@ export function reducer(state = initialState, action: ProductActions): ProductSt
                 ...state,
                 products: updatedProducts,
                 currentProductId: action.payload.id,
-                updateProductError: ''
+                error: ''
             };
         case ProductActionTypes.UpdateProductFail:
             return {
                 ...state,
-                updateProductError: action.payload
+                error: action.payload
+            };
+        case ProductActionTypes.DeleteProductSuccess:
+            return {
+                ...state,
+                products: state.products.filter(p => p.id !== action.payload),
+                currentProductId: null,
+                error: ''
+            };
+        case ProductActionTypes.DeleteProductFail:
+            return {
+                ...state,
+                error: action.payload
             };
         default:
             return state;
