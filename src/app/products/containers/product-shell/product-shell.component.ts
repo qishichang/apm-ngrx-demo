@@ -14,6 +14,7 @@ export class ProductShellComponent implements OnInit {
   products$: Observable<Product[]>;
   selectedProduct$: Observable<Product>;
   displayCode$: Observable<boolean>;
+  currentProduct$: Observable<Product>;
   errorMessage$: Observable<string>;
 
   constructor(private store: Store<fromProduct.State>) { }
@@ -37,5 +38,21 @@ export class ProductShellComponent implements OnInit {
 
   productSelected(product: Product): void {
     this.store.dispatch(new productActions.SetCurrentProduct(product));
+  }
+
+  createProduct(product: Product): void {
+    this.store.dispatch(new productActions.CreateProduct(product));
+  }
+
+  updateProduct(product: Product): void {
+    this.store.dispatch(new productActions.UpdateProduct(product));
+  }
+
+  deleteProduct(product: Product): void {
+    this.store.dispatch(new productActions.DeleteProduct(product.id));
+  }
+
+  clearCurrentProduct(): void {
+    this.store.dispatch(new productActions.ClearCurrentProduct());
   }
 }
